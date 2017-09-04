@@ -4,7 +4,6 @@
 
 for relaxation
 
-***
 ## Requirements
 * tensorflow
 - keras
@@ -12,6 +11,7 @@ for relaxation
 - numpy
 - matplotlib
 
+## Overview
 ぶつかったりふえたりするげーむ
 
 白いのがGAで進化したり  
