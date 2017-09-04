@@ -22,14 +22,13 @@ for relaxation
 ## Files
 * RLball.py
 - RLball2.py  
-    * Policy Networkで学習
-    * 軽い
-    * おバカ
+ Policy Networkで学習
 
-* dqn_ball.py
-    * DQNで学習
-    * 動かない。。。
 
-* ballenv.py
-    * dqn_ball用にenv化したクラゲゲーム
-    * pygameのせいか描写がslow
+* dqn_ball.py  
+DQNで学習
+
+
+* ballenv.py  
+dqn_ball用にenv化したクラゲゲーム
+
