@@ -12,7 +12,7 @@ for relaxation
 - matplotlib
 
 ## Overview
-ぶつかったりふえたりするげーむ
+ぶつかったりふえたり
 
 白いのがGAで進化したり  
 赤いのが狩りを覚えるのをみてなごもう
