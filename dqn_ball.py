@@ -19,7 +19,7 @@ class DQNAgent:
         self.load_model = False
         
         # get size of state and action
-        self.state_size = (state_size[0], state_size[1], 1)
+        self.state_size = (state_size[0], state_size[1], 4)
         print(self.state_size)
         self.action_size = action_size
         
@@ -110,8 +110,8 @@ class DQNAgent:
         batch_size = min(self.batch_size, len(self.memory))
         mini_batch = random.sample(self.memory, batch_size)
 
-        update_input = np.zeros((batch_size, self.state_size))
-        update_target = np.zeros((batch_size, self.state_size))
+        update_input = np.zeros((batch_size, self.state_size[0], self.state_size[1], self.state_size[2]))
+        update_target = np.zeros((batch_size, self.state_size[0], self.state_size[1], self.state_size[2]))
         action, reward, done = [], [], []
 
         for i in range(self.batch_size):
@@ -148,18 +148,23 @@ if __name__ == "__main__":
     score = 0
     state = env.reset()
     step = 0
+    history = np.stack((state,state,state,state), axis=2)
+    history = np.reshape([history],(1, 65, 65, 4))
     try:
         while 1:
 
             # get action for the current state and go one step in environment
-            action = agent.get_action(state)
+            action = agent.get_action(history)
             next_state, reward, done = env.step(action)
 
             # save the sample <s, a, r, s'> to the replay memory
-            agent.append_sample(state, action, reward, next_state, done)
+            next_state = np.reshape([next_state], (1, 65, 65, 1))
+            next_history = np.append(next_state, history[:,:,:,:3], axis=3)
+
+            agent.append_sample(history, action, reward, next_history, done)
             agent.train_model()
             score += reward
-            state = next_state
+            history = next_history
             step = step + 1
             if done:
                 # every episode update the target model to be same with model

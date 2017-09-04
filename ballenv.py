@@ -326,7 +326,8 @@ class ballenv():
         self.action_size = 9
         #size = 1200,700
         self.scrRect = Rect(0,0,1200,700)
-        self.screen = pygame.display.set_mode(self.scrRect.size)
+        self.screen = pygame.display.set_mode(self.scrRect.size,DOUBLEBUF)
+        self.screen.set_alpha(None)
         self.ball = ball
         self.rlball = rlball
         self.ball.screen = self.scrRect
@@ -360,7 +361,7 @@ class ballenv():
     def step(self, action):
         self.playerball.action = action
         # limit FPS to 60/s
-        self.clock.tick(60)
+        self.clock.tick(120)
 
         # pygame drawing
         self.screen.fill((0,0,0))
