@@ -112,6 +112,7 @@ class DQNAgent:
 
         update_input = np.zeros((batch_size, self.state_size[0], self.state_size[1], self.state_size[2]))
         update_target = np.zeros((batch_size, self.state_size[0], self.state_size[1], self.state_size[2]))
+        target = np.zeros((self.batch_size,))
         action, reward, done = [], [], []
 
         for i in range(self.batch_size):
@@ -121,15 +122,15 @@ class DQNAgent:
             update_target[i] = mini_batch[i][3]
             done.append(mini_batch[i][4])
 
-        target = self.model.predict(update_input)
+        #target = self.model.predict(update_input)
         target_val = self.target_model.predict(update_target)
 
         for i in range(self.batch_size):
             # Q Learning: get maximum Q value at s' from target model
             if done[i]:
-                target[i][action[i]] = reward[i]
+                target[i] = reward[i]
             else:
-                target[i][action[i]] = reward[i] + self.discount_factor * (
+                target[i] = reward[i] + self.discount_factor * (
                     np.amax(target_val[i]))
 
         # and do the model fit!
